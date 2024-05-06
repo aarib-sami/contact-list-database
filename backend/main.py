@@ -15,9 +15,9 @@ def create_contacts():
     email = request.json.get("email")
 
     if not first_name or not last_name or not email:
-        return (jsonify({"message": "You must unclude a first name, last name and email"}), 400)
+        return (jsonify({"message": "You must unclude a frst name, last name and email"}), 400,)
 
-    new_contact = Contact(first_name first_name, last_name last_name, email email)
+    new_contact = Contact(first_name = first_name, last_name = last_name, email = email)
     try:
         db.session.add(new_contact)
         db.session.commit()
@@ -26,7 +26,7 @@ def create_contacts():
     
     return jsonify({"message": str(e)}), 201
 
-@app.route("/update_contact/<int:user_id>", method = ["PATCH"])
+@app.route("/update_contact/<int:user_id>", methods = ["PATCH"])
 def update_contact(user_id):
     contact = Contact.query.get(user_id)
 
