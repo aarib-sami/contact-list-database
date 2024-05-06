@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import ContactList from './ContactList'
 import './App.css'
 
 function App() {
@@ -15,11 +16,10 @@ function App() {
     console.log(date.console)
   }
 
-  return (
-    <>
-      
-    </>
-  )
+  return <><ContactList contacts={contacts}/>
+    <ContactForm /></>
+  
+  
 }
 
 export default App

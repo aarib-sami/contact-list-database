@@ -28,3 +28,5 @@ const ContactList = ({contacts}) => {
         </table>
     </div>
 }
+
+export default ContactList
