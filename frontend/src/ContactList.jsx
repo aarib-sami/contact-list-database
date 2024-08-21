@@ -1,7 +1,10 @@
 // ContactList.jsx
-import React from "react";
+import React, { useState } from "react";
+import "./App.css"; // Ensure this path is correct
 
-const ContactList = ({ contacts, updateContact, updateCallback }) => {
+const ContactList = ({ contacts, updateContact, updateCallback, handleSelection }) => {
+  const [selectedContacts, setSelectedContacts] = useState([]);
+
   const onDelete = async (id) => {
     try {
       const options = {
@@ -18,12 +21,24 @@ const ContactList = ({ contacts, updateContact, updateCallback }) => {
     }
   };
 
+  const handleCheckboxChange = (contactId, isChecked) => {
+    let updatedSelectedContacts;
+    if (isChecked) {
+      updatedSelectedContacts = [...selectedContacts, contactId];
+    } else {
+      updatedSelectedContacts = selectedContacts.filter(id => id !== contactId);
+    }
+    setSelectedContacts(updatedSelectedContacts);
+    handleSelection(updatedSelectedContacts);
+  };
+
   return (
     <div className="contact-list">
       <h2>Contacts</h2>
       <table className="table">
         <thead>
           <tr>
+            <th>Send To</th>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Email</th>
@@ -33,6 +48,14 @@ const ContactList = ({ contacts, updateContact, updateCallback }) => {
         <tbody>
           {contacts.map((contact) => (
             <tr key={contact.id}>
+              <td>
+                <input
+                  type="checkbox"
+                  className="checkbox" // Apply the CSS class
+                  checked={selectedContacts.includes(contact.id)}
+                  onChange={(e) => handleCheckboxChange(contact.id, e.target.checked)}
+                />
+              </td>
               <td>{contact.firstName}</td>
               <td>{contact.lastName}</td>
               <td>{contact.email}</td>
